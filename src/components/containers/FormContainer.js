@@ -39,20 +39,22 @@ class FormContainer extends Component {
 
   handleFormSubmit(e) {
     e.preventDefault();
-    let userData = this.state.user;
-    console.log(userData)
+    let data = this.state.user;
+    console.log(data)
 
     fetch(this.props.postUrl, {
         method: "POST",
-        body: JSON.stringify(userData),
+        body: JSON.stringify(data),
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
       }).then(response => {
         response.json().then(data =>{
-          console.log("Successful" + data);
-        })
+          this.props.handleResponse(data);
+        }).catch(err => console.log(err))
+        
     })
   }   
 
