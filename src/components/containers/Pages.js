@@ -4,6 +4,7 @@ import Profile from './Profile'
 import Register from './Register'
 import Settings from './Settings'
 import Groups from './Groups'
+import Group from './Group'
 
 export {
     Home,
@@ -11,5 +12,6 @@ export {
     Profile,
     Register,
     Settings,
-    Groups
+    Groups,
+    Group
 }

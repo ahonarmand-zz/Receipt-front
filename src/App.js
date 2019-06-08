@@ -5,7 +5,7 @@ import SubmitReceipt from './components/SubmitReceipt';
 import FormContainer from './components/containers/FormContainer';
 import Header from './components/components/Header'
 import { Route, Switch, Link, BrowserRouter as Router } from 'react-router-dom';
-import { Home, Login, Profile, Register, Settings, Groups } from './components/containers/Pages'
+import { Home, Login, Profile, Register, Settings, Groups, Group } from './components/containers/Pages'
 
 
 
@@ -37,6 +37,7 @@ class App extends Component {
             <Route path="/settings" component={ Settings }/>
             <Route path="/profile" component={ Profile }/>
             <Route path="/groups" component={ Groups }/>
+            <Route path="/group" component={ Group }/>
             <Route render={ () => <h1>404 Error</h1> } />
           </Switch>
 
