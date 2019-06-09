@@ -21,9 +21,29 @@ class Group extends Component {
     }
 
     componentDidMount() {
-        console.log("here")
-        
         this.get_members()
+        this.get_expenses()
+    }
+
+    get_expenses() {
+        fetch(`http://localhost:5000/api/group/${this.group_id}/expenses`,
+        {
+            method: "GET",
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }
+    ).then(response => {
+        if (response.ok) {
+        response.json().then(json => {
+            console.log("EXPESES:")
+            console.log(json);
+
+        });
+        }
+    })
     }
 
     get_members() {
@@ -51,26 +71,35 @@ class Group extends Component {
             <div>
                 <h1> {`Group: ${this.group_name}`} </h1>
                 <h3>Members:</h3>
+                {<table>
+                    <tr>
+                        <th>name</th>
+                        <th>email</th>
+                        {/* <th>expense category</th> */}
+                    </tr>
                 {
-                    
-                    <table>
+                    this.state.members.map(member => 
                         <tr>
-                            <th>name</th>
-                            <th>email</th>
+                            <td>{ member.name || "" }</td>
+                            <td>{ member.email || "" }</td>
                         </tr>
-                    {
-                        this.state.members.map(member => 
-                            <tr>
-                                <td>{ member.name || "" }</td>
-                                <td>{ member.email || "" }</td>
-                            </tr>
-                        )
-                    }
-                    </table>
-                    
-
-                    
+                    )
                 }
+                </table>}
+                
+                <FormContainer 
+                    name="create expense category" 
+                    form_data={{"expense_name": ''}}
+                    post_req_meta={{'group_id': this.group_id}}
+                    postUrl="http://localhost:5000/api/group_expense"
+                    handleResponse={
+                        (data) => {
+                            console.log(JSON.stringify(data))
+                            // this.update_groups()
+                    }
+                    }
+                />
+
             </div>
             
             

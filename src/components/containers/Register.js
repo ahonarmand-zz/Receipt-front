@@ -9,7 +9,7 @@ class Register extends Component {
 
                 <FormContainer
                     name="register"
-                    fields={["name", "email", "password"]}
+                    form_data={{"name": '', "email": '', "password": ''}}
                     postUrl="http://localhost:5000/api/user/register"
                     handleResponse={(data) => console.log(JSON.stringify(data))}
                 />

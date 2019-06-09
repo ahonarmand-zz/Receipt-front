@@ -10,7 +10,7 @@ class Login extends Component {
                 </h1>
                 <FormContainer 
                     name="login" 
-                    fields={["email", "password"]} 
+                    form_data={{"email": '', "password": ''}}
                     postUrl="http://localhost:5000/api/user/login" 
                     handleResponse={(data) => {
                     console.log("here");

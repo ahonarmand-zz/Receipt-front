@@ -49,7 +49,7 @@ class Groups extends Component {
 
                 <FormContainer 
                     name="create group" 
-                    fields={["group_name"]} 
+                    form_data={{"group_name": ''}} 
                     postUrl="http://localhost:5000/api/group"
                     handleResponse={
                         (data) => {

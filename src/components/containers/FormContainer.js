@@ -7,14 +7,8 @@ class FormContainer extends Component {
   constructor(props) {
     super(props);
 
-    var user = {}
-
-    for (var i=0; i<this.props.fields.length; i++){
-      user[this.props.fields[i]] = ''
-    }
-
     this.state = {
-      user: user,
+      form_data: props.form_data,
     }
 
     console.log("here")
@@ -31,15 +25,15 @@ class FormContainer extends Component {
   handleInput(e) {
        let value = e.target.value;
        let name = e.target.name;
-   this.setState( prevState => ({ user : 
-        {...prevState.user, [name]: value
+   this.setState( prevState => ({ form_data : 
+        {...prevState.form_data, [name]: value
         }
-      }), () => console.log(this.state.user))
+      }), () => console.log(this.state.form_data))
   }
 
   handleFormSubmit(e) {
     e.preventDefault();
-    let data = this.state.user;
+    let data = Object.assign({}, this.state.form_data, this.props.post_req_meta);
     console.log(data)
 
     fetch(this.props.postUrl, {
@@ -62,9 +56,7 @@ class FormContainer extends Component {
   
       e.preventDefault();
       this.setState({ 
-        user: {
-          ...this.props.fields
-        },
+        form_data: this.props.form_data,
       })
   }
 
@@ -73,11 +65,11 @@ class FormContainer extends Component {
         <div>
           <h3>{this.props.name}</h3>
           <form className={this.props.name} onSubmit={this.handleFormSubmit}>
-            {this.props.fields.map(field =>
+            {Object.keys(this.props.form_data).map(field =>
               <Input inputType={'text'}
               title= {field} 
               name= {field}
-              value={this.state.user[field]} 
+              value={this.state.form_data[field]} 
               placeholder = {`Enter your name ${field}`}
               handleChange = {this.handleInput}
               />
