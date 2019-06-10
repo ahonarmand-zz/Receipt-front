@@ -8,8 +8,19 @@ class MemberExpenseShare extends Component {
                 {email: "c@d.com", name: "Cristian", expense_shares:[{expense_name: "a", expense_share: 80}, {expense_name: "b", expense_share: 30}] }
             ]
         this.expense_names = this.extract_expense_names(this.members)
-        this.email_expense_to_share = this.create_email_expense_map(this.members)
+        this.expense_shares = this.get_expense_shares(this.members)
         console.log(this.email_expense_to_share)
+    }
+
+    get_expense_shares(members){
+        const m = {}
+        for (const member of members){
+            m[member.email] = {}
+            for (const e of member.expense_shares){
+                m[member.email][e.expense_name] = e.expense_share
+            }
+        }
+        return m
     }
 
     extract_expense_names(members) {
@@ -20,11 +31,6 @@ class MemberExpenseShare extends Component {
             member_expense_names.forEach(expense => expenses.add(expense))
         }
         return Array.from(expenses)
-    }
-
-    create_email_expense_tuple(email, expense){
-        //TODO: is there really no way to use an object as the key of a map?? :o
-        return [email, expense].join('-')
     }
 
     create_email_expense_map(members) {
@@ -39,37 +45,48 @@ class MemberExpenseShare extends Component {
     }
 
     get_member_share(email, expense_name){
-        const key = this.create_email_expense_tuple(email, expense_name)
-
-        if (key in this.email_expense_to_share){
-            return this.email_expense_to_share[key]
+        if (expense_name in this.expense_shares[email]){
+            return this.expense_shares[email][expense_name]
         } else {
             return ""
         }
-            
     }
 
     render() {
         return (
         <div>
             <table>
+                <tbody>
                     <tr>
                         <th>name</th>
                         <th>email</th>
-                        {this.expense_names.map(
+                        {Object.keys(this.expense_shares).map(
                             e => <th> {e.expense_name} </th>
                         )}
                         {/* <th>expense category</th> */}
                     </tr>
+                </tbody>
+                    
                 {
                     this.members.map(member => 
-                        <tr>
-                            <td>{ member.name || "" }</td>
-                            <td>{ member.email || "" }</td>
-                            {
-                                this.expense_names.map(e => <td>{this.get_member_share(member.email, e)}</td>)
-                            }
-                        </tr>
+                        <tbody>
+                            <tr>
+                                <td>{ member.name || "" }</td>
+                                <td>{ member.email || "" }</td>
+                                {
+                                    Object.keys(this.expense_shares[member.email ]).map(e => <td>
+                                        {/* <Input inputType={'text'}
+                                            title= {field} 
+                                            name= {field}
+                                            value={this.state.form_data[field]} 
+                                            placeholder = {`Enter your name ${field}`}
+                                            handleChange = {this.handleInput}
+                                        /> */}
+                                        {this.get_member_share(member.email, e)}</td>)
+                                }
+                            </tr>
+                        </tbody>
+                        
                     )
                 }
                 </table>
