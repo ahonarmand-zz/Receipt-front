@@ -1,6 +1,7 @@
 import React, {Component} from 'react';  
 import FormContainer from '../../components/containers/FormContainer';
 import { matchPath } from 'react-router';
+import MemberExpenseShare from '../../components/containers/MemberExpenseShare'
 
 class Group extends Component { 
     constructor(props) {
@@ -16,7 +17,8 @@ class Group extends Component {
         console.log(this.group_id)
         console.log(this.group_name)
         this.state = {
-            members: []
+            members: [],
+            expenses: []
         }
     }
 
@@ -40,7 +42,7 @@ class Group extends Component {
         response.json().then(json => {
             console.log("EXPESES:")
             console.log(json);
-
+            this.setState({expenses: json})
         });
         }
     })
@@ -71,21 +73,7 @@ class Group extends Component {
             <div>
                 <h1> {`Group: ${this.group_name}`} </h1>
                 <h3>Members:</h3>
-                {<table>
-                    <tr>
-                        <th>name</th>
-                        <th>email</th>
-                        {/* <th>expense category</th> */}
-                    </tr>
-                {
-                    this.state.members.map(member => 
-                        <tr>
-                            <td>{ member.name || "" }</td>
-                            <td>{ member.email || "" }</td>
-                        </tr>
-                    )
-                }
-                </table>}
+                <MemberExpenseShare/>
                 
                 <FormContainer 
                     name="create expense category" 
@@ -96,13 +84,18 @@ class Group extends Component {
                         (data) => {
                             console.log(JSON.stringify(data))
                             // this.update_groups()
-                    }
-                    }
+                    }}
                 />
-
+                
+                <h2>Current Group Expense Categories</h2>
+                {
+                    this.state.expenses ? this.state.expenses.map(
+                    e => <h4> 
+                            {e.expense_name}
+                        </h4>
+                        ) : <h4>This group currently has no expenses</h4>
+                }
             </div>
-            
-            
         )
     }
 }
