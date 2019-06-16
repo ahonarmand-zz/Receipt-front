@@ -16,10 +16,7 @@ class MemberExpenseShare extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        console.log("****in componenetDidUpdate")
         if (this.props != prevProps){
-            console.log("changing state");
-            console.log(this.props)
             this.handleProps(this.props.members_expenses) 
         }
       }
@@ -54,13 +51,15 @@ class MemberExpenseShare extends Component {
     }
 
     get_expense_names(){
-        console.log(`state.expense_shares`);
-        console.log(this.state.expense_shares)
         const email1 = Object.keys(this.state.expense_shares)[0]
         if (!email1){
             return []
         }
         return Object.keys(this.state.expense_shares[email1].shares)
+    }
+
+    post_new_ratios(){
+
     }
 
     table_header(){
@@ -80,8 +79,6 @@ class MemberExpenseShare extends Component {
         return Object.keys(expense_shares).map( email => {
             const name = expense_shares[email].name
             const shares = expense_shares[email].shares
-            console.log(`SHARES:`);
-            console.log(shares);
             return (
                 <tr>
                     <td>{ name || "" }</td>
