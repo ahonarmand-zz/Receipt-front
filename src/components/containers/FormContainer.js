@@ -11,9 +11,6 @@ class FormContainer extends Component {
       form_data: props.form_data,
     }
 
-    console.log("here")
-    console.log(`props: ${JSON.stringify(props)}`)
-
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.handleClearForm = this.handleClearForm.bind(this);
     this.handleInput = this.handleInput.bind(this);

@@ -1,7 +1,6 @@
 import React from 'react';
 
 const Input = (props) => {
-  console.log(`input props: ${JSON.stringify(props)}`)
     return (  
   <div className="form-group">
     <label htmlFor={props.name} className="form-label">{props.title}</label>

@@ -18,13 +18,34 @@ class Group extends Component {
         console.log(this.group_name)
         this.state = {
             members: [],
-            expenses: []
+            expenses: [],
+            member_expenses: []
         }
     }
 
     componentDidMount() {
         this.get_members()
         this.get_expenses()
+        this.get_member_expenses()
+    }
+
+    get_member_expenses() {
+        fetch(`http://localhost:5000/api/group/${this.group_id}/member_expenses`,
+        {
+            method: "GET",
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }
+    ).then(response => {
+        if (response.ok) {
+        response.json().then(json => {
+            this.setState({member_expenses: json})
+        });
+        }
+    })
     }
 
     get_expenses() {
@@ -40,8 +61,6 @@ class Group extends Component {
     ).then(response => {
         if (response.ok) {
         response.json().then(json => {
-            console.log("EXPESES:")
-            console.log(json);
             this.setState({expenses: json})
         });
         }
@@ -61,7 +80,6 @@ class Group extends Component {
     ).then(response => {
         if (response.ok) {
         response.json().then(json => {
-            console.log(json);
             this.setState({members: json })
         });
         }
@@ -73,7 +91,7 @@ class Group extends Component {
             <div>
                 <h1> {`Group: ${this.group_name}`} </h1>
                 <h3>Members:</h3>
-                <MemberExpenseShare/>
+                <MemberExpenseShare members_expenses={this.state.member_expenses}/>
                 
                 <FormContainer 
                     name="create expense category" 
