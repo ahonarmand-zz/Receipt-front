@@ -104,6 +104,18 @@ class Group extends Component {
                             // this.update_groups()
                     }}
                 />
+
+                <FormContainer 
+                    name="add member" 
+                    form_data={{"member_email": ''}}
+                    post_req_meta={{'group_id': this.group_id}}
+                    postUrl="http://localhost:5000/api/member"
+                    handleResponse={
+                        (data) => {
+                            console.log(JSON.stringify(data))
+                            // this.update_groups()
+                    }}
+                />  
                 
                 <h2>Current Group Expense Categories</h2>
                 {

@@ -19,6 +19,7 @@ class MemberExpenseShare extends Component {
     componentDidUpdate(prevProps) {
         console.log("****in componenetDidUpdate")
         if (this.props != prevProps){
+            console.log(this.props)
             this.handleProps(this.props.members_expenses) 
         }
 
@@ -116,7 +117,7 @@ class MemberExpenseShare extends Component {
                                                 name={[member.email, expense_name].join('-')}
                                                 value={
                                                     expense_name in this.state.expense_shares[member.email] ? 
-                                                    this.state.expense_shares[member.email][expense_name] : 0
+                                                    this.state.expense_shares[member.email][expense_name]/100 : 0
                                                 } 
                                                 handleChange = {this.handle_input(member.email, expense_name)}
                                             />
