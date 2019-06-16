@@ -63,7 +63,7 @@ class MemberExpenseShare extends Component {
         return Object.keys(this.state.expense_shares[email1].shares)
     }
 
-    tableHeader(){
+    table_header(){
         return (
             <tr>
                 <th>name</th>
@@ -75,7 +75,7 @@ class MemberExpenseShare extends Component {
         )
     }
 
-    tableContent(){
+    table_content(){
         const expense_shares = this.state.expense_shares
         return Object.keys(expense_shares).map( email => {
             const name = expense_shares[email].name
@@ -103,7 +103,7 @@ class MemberExpenseShare extends Component {
         )                                
     }
 
-    tableButtons(){
+    table_buttons(){
         return (
             <tr>
                 <td></td>
@@ -125,9 +125,9 @@ class MemberExpenseShare extends Component {
             <div>
                 <table>
                     <tbody>
-                        {this.tableHeader()}
-                        {this.tableContent()}
-                        {this.tableButtons()}
+                        {this.table_header()}
+                        {this.table_content()}
+                        {this.table_buttons()}
                     </tbody>
 
                 </table>
