@@ -25,7 +25,7 @@ class FormContainer extends Component {
    this.setState( prevState => ({ form_data : 
         {...prevState.form_data, [name]: value
         }
-      }), () => console.log(this.state.form_data))
+      }))
   }
 
   handleFormSubmit(e) {

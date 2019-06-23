@@ -91,7 +91,7 @@ class Group extends Component {
             <div>
                 <h1> {`Group: ${this.group_name}`} </h1>
                 <h3>Members:</h3>
-                <MemberExpenseShare members_expenses={this.state.member_expenses}/>
+                <MemberExpenseShare members_expenses={this.state.member_expenses} group_id={this.group_id}/>
                 
                 <FormContainer 
                     name="create expense category" 
